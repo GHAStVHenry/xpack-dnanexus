@@ -32,23 +32,23 @@
         "author": "Paolo Di Tommaso, et al."
       }
     ],
-    "whatsNew": "* 1.0.0-beta.3: Add support for Docker privare repos; Fix support for DNAnexus Azure region\n* 1.0.0-beta.2: First version of the Nextflow for DNAnexus"
+    "whatsNew": "* 1.0.0-beta.3: Add support for Docker private repos; Fix support for DNAnexus Azure region\n* 1.0.0-beta.2: First version of the Nextflow for DNAnexus"
   },
   "openSource": false,
   "inputSpec": [
-      {
-        "name": "pipeline_url",
-        "class": "string",
-        "label": "Pipeline URL",
-        "help": "The Git repository of the pipeline project to be executed.",
-        "default": "https://github.com/nextflow-io/hello"
-      },
       {
         "name": "license",
         "class": "string",
         "label": "Activation license",
         "help": "The activation license to enable Nextflow for DNAnexus execution. It should be provided as a DNAnexus path e.g. dx://project-12345:/some/license.txt",
         "optional": false
+      },
+      {
+        "name": "pipeline_url",
+        "class": "string",
+        "label": "Pipeline URL",
+        "help": "The Git repository of the pipeline project to be executed.",
+        "default": "https://github.com/nextflow-io/hello"
       },
       {
         "name": "args",
