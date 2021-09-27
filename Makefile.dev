@@ -9,7 +9,7 @@ clean:
 dx-pull-nf:
 	mkdir -p build/nextflow-app/resources/usr/bin
 	mkdir -p build/nextflow-app/resources/opt/nextflow
-	NXF_VER=21.04.0 NXF_HOME=build/nextflow-app/resources/opt/nextflow bash -c 'curl get.nextflow.io | bash'
+	NXF_VER=21.08.0-edge NXF_HOME=build/nextflow-app/resources/opt/nextflow bash -c 'curl get.nextflow.io | bash'
 	mv nextflow build/nextflow-app/resources/usr/bin/nextflow
 	rm -rf build/nextflow-app/resources/opt/nextflow/tmp
 
@@ -19,7 +19,8 @@ dx-core-pack:
 	cp ../nextflow/build/releases/nextflow-* build/nextflow-app/resources/usr/bin/nextflow
 
 dx-plugin-pack: 
-	cd ../nf-xpack && make assemble
+	cd ../nf-xpack && make clean assemble
+	rm -rf build/nextflow-app/resources/opt/nextflow/plugins
 	mkdir -p build/nextflow-app/resources/opt/nextflow/plugins
 	cp -r ../nf-xpack/build/plugins/xpack-dnanexus-* build/nextflow-app/resources/opt/nextflow/plugins
 	rm build/nextflow-app/resources/opt/nextflow/plugins/*.zip

@@ -11,7 +11,7 @@
       {
         "name": "Nextflow",
         "repoUrl": "https://github.com/nextflow-io/nextflow",
-        "version": "21.04.0",
+        "version": "21.08.0-edge",
         "license": "Apache 2.0",
         "licenseUrl": "https://github.com/nextflow-io/nextflow/blob/master/COPYING",
         "author": "Paolo Di Tommaso, et al."
@@ -19,7 +19,7 @@
       {
         "name": "Groovy",
         "repoUrl": "https://github.com/apache/groovy",
-        "version": "3.0.7",
+        "version": "3.0.8",
         "license": "Apache 2.0",
         "licenseUrl": "https://github.com/apache/groovy/blob/master/LICENSE",
         "author": "Groovy community"
@@ -27,12 +27,12 @@
       {
         "name": "Xpack-dnanexus",
         "repoUrl": "https://github.com/seqeralabs/xpack-dnanexus",
-        "version": "1.0.0-beta.2",
+        "version": "1.0.0-beta.3",
         "license": "Proprietary",
         "author": "Paolo Di Tommaso, et al."
       }
     ],
-    "whatsNew": "* 1.0.0-beta.2: First version of the Nextflow for DNAnexus"
+    "whatsNew": "* 1.0.0-beta.3: Add support for Docker privare repos; Fix support for DNAnexus Azure region\n* 1.0.0-beta.2: First version of the Nextflow for DNAnexus"
   },
   "openSource": false,
   "inputSpec": [
@@ -44,6 +44,13 @@
         "default": "https://github.com/nextflow-io/hello"
       },
       {
+        "name": "license",
+        "class": "string",
+        "label": "Activation license",
+        "help": "The activation license to enable Nextflow for DNAnexus execution. It should be provided as a DNAnexus path e.g. dx://project-12345:/some/license.txt",
+        "optional": false
+      },
+      {
         "name": "args",
         "class": "string",
         "label": "Nextflow run arguments & pipeline parameters",
@@ -51,18 +58,25 @@
         "optional": true
       },
       {
-        "name": "scm_file",
+        "name": "work_dir",
         "class": "string",
-        "label": "Git repository credentials file",
-        "help": "The Nextflow scm file providing the access credentials for private Git repository. It should be provided as a DNAnexus path e.g. dx:/project-12345:/some/creds.txt",
+        "label": "Work directory",
+        "help": "Pipeline work directory (optional).",
         "optional": true
       },
       {
-        "name": "license",
+        "name": "scm_file",
         "class": "string",
-        "label": "Activation license",
-        "help": "The activation license to enable Nextflow for DNAnexus execution. It should be provided as a DNAnexus path e.g. dx://project-12345:/some/license.txt",
-        "optional": false
+        "label": "Git repository credentials file",
+        "help": "The Nextflow scm file providing the access credentials for private Git repository. It should be provided as a DNAnexus path e.g. dx://project-12345:/some/creds.txt",
+        "optional": true
+      },
+      {
+        "name": "docker_creds_file",
+        "class": "string",
+        "label": "Docker credentials file",
+        "help": "A file holding the credentials to access Docker private registries. It should be provided as a DNAnexus path e.g. dx://project-12345:/some/creds.txt",
+        "optional": true
       },
       {
         "name": "debug",
@@ -76,7 +90,10 @@
   "runSpec": {
     "file": "src/dxapp.sh",
     "interpreter": "bash",
-    "execDepends": [ {"name": "openjdk-8-jre-headless", "stages": ["main"]} ],
+    "execDepends": [
+      {"name": "openjdk-8-jre-headless", "stages": ["main"]},
+      {"name": "jq", "stages": ["work"]}
+    ],
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"
