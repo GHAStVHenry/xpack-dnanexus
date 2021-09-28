@@ -24,13 +24,13 @@ for details.
 ## Get started 
 
 In order to deploy the execution of a Nextflow pipeline in DNAnexus you will need to create 
-a DNAnexus applet bundling the Nextflow runtime along the DNAnexus extension plugin and, optionally, the pipeline scripts.
+a DNAnexus applet bundling the Nextflow runtime along the DNAnexus extension plugin and, optionally, 
+the pipeline scripts.
 
 In alternative to bundling the pipeline in the DNAnexus applet, it can be pulled from a Git repository 
 as is usually done by Nextflow. 
 
-The `Makefile` included in this repository automates the creation of the DNAnexus applet for Nextflow 
-using the following steps: 
+The `Makefile` included in this repository automates the creation of the DNAnexus applet for Nextflow using the following steps: 
 
 #### 0. Login in your DNAnexus workspace 
 
@@ -43,7 +43,7 @@ dx login
 ``` 
 git clone https://github.com/seqeralabs/xpack-dnanexus
 cd xpack-dnanexus
-```              
+```
 
 #### 2. Create the DNAnexus bundle including the Nextflow runtime 
 
@@ -53,7 +53,7 @@ make dx-pack
 
 The above command creates the bundle skeleton in the directory `build/nextflow-app`.  
 
-#### 3. Modify the app metadata 
+#### 3. Modify the app metadata (optional)
 
 DNAnexus app requires a file named `dxapp.json` to configure the application deployment 
 and parameters. 
@@ -74,17 +74,24 @@ make dx-build
 
 The above command build the DNAnexus applet for Nextflow with the name `nextflow-app` ready to be executed. 
 
-#### 5. Example runs
+#### 5. Upload license file to DNAnexus
 
-You can find below some examples to deploy the execution of Nextflow with the applet build from the 
-above guide. 
+The best practice to store XPACK license and any other credentials files consists creating a project on dedicated DNAnexus project to upload and store safely those files. Once this project is created, grab the project unique ID and define the following environment variable.
 
-Declare the following environment variable with your XPACK-DNANEXUS license. 
-
-``` 
-export NXF_XPACK_LICENSE=<YOUR LICENSE CONTENT>
 ```
- 
+export DX_CREDS_PROJECT=project-123456789
+```
+
+In above snippet replace `project-123456789` with your DNAnexus project where 
+the license file was uploaded. 
+
+#### 6. Example runs
+
+You can find below some examples to deploy the execution of Nextflow with the applet build from the above guide.
+
+Those examples assume the license file has been given the name `xpack-license.txt` 
+and uploaded into the DNAnexus project referenced by the environment 
+variable `DX_CREDS_PROJECT`.
 
 
 ##### Launching classic NF Hello world app 
@@ -136,12 +143,12 @@ The above example launch shows how to run the exection of the [nf-core/rnaseq](h
 
 ## Use of Git private repository
 
-The access of Git private repository is supported using the usual 
-Nextflow [scm](https://www.nextflow.io/docs/latest/sharing.html?#scm-configuration-file) file holding the repository access credentials. 
+The access of Git private repository is supported using the usual
+Nextflow [scm](https://www.nextflow.io/docs/latest/sharing.html?#scm-configuration-file) file holding the repository access credentials.
 
-Upload *scm* file into a DNAnexus project where the pipeline is expected to run, then 
-specify the file path an an input parameter of the Nextflow app using the `scm_file` 
-parameter e.g. `project-123456789:/my-scm.txt`. 
+Upload *scm* file into a DNAnexus project where the pipeline is expected to run, then
+specify the file path an an input parameter of the Nextflow app using the `scm_file`
+parameter e.g. `project-123456789:/my-scm.txt`.
 
 ## User of Docker private registry
 
@@ -157,11 +164,11 @@ registry credentials via JSON file formated as shown below:
 ```
 
 Upload the credentials into a DNAnexus project where the pipeline is expected to run,  
-then specify the file path an an input parameter of the Nextflow app using the `docker_creds_file` parameter e.g. `project-123456789:/my-docker-creds.json`. 
+then specify the file path an an input parameter of the Nextflow app using the `docker_creds_file` parameter e.g. `project-123456789:/my-docker-creds.json`.
 
 
-## Latest changes  
-- Version `1.0.0-beta.3` adds the support for Docker private registry. Moreover 
+## Latest changes
+- Version `1.0.0-beta.3` adds the support for Docker private registry. Moreover
   it fixes the support for DNAnexus Azure region.
 - As of version `1.0.0-beta.2` directives [cpus](https://www.nextflow.io/docs/latest/process.html#cpus), [memory](https://www.nextflow.io/docs/latest/process.html#memory), [disk](https://www.nextflow.io/docs/latest/process.html#disk) and [accelerator](https://www.nextflow.io/docs/latest/process.html#accelerator)
   are supported. When specified Nextflow look up for a machine type able to 
@@ -177,4 +184,4 @@ then specify the file path an an input parameter of the Nextflow app using the `
 
 ## Copyright 
 
-Seqera Labs, All rights reserved.
+Seqera Labs, All rights reserved.  

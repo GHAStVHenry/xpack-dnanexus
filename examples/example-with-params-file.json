@@ -1,4 +1,5 @@
 {
 	"pipeline_url": "pditommaso/rnaseq-nf",
-	"args": "-profile docker -params-file dx://project-Fv8xxYj0V2gYj8BXJF6ZyXFG:/nf-inputs.yml"
+	"args": "-profile docker -params-file dx://project-Fv8xxYj0V2gYj8BXJF6ZyXFG:/nf-inputs.yml",
+	"license": "$DX_CREDS_PROJECT:/xpack-license.txt"
 }
