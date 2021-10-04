@@ -15,7 +15,7 @@ NOTE: The plugin is still in beta version and some Nextflow functionalities are 
 
 * DNAnexus command line tools aka dx-toolkit. See [here](https://documentation.dnanexus.com/getting-started/tutorials/cli-quickstart) 
 for details.
-* Nextflow runtime version 21.04.1-edge or later. 
+* Nextflow runtime version 21.08.0-edge or later. 
 * Valid license for DNAnexus extension package for Nextflow.  
 * [Make](https://www.gnu.org/software/make) tool (only for the project bundling). 
 
@@ -58,7 +58,7 @@ DNAnexus app requires a file named `dxapp.json` to configure the application dep
 and parameters. 
 
 A predefined app metadata file with the settings required for the Nextflow execution 
-is available in this repository at the path [app/dxapp.json]. Modify it according your 
+is available in this repository at the path [app/dxapp.json](app/dxapp.json). Modify it according your 
 requirements. 
 
 See the [DNAnexus documentation](
@@ -133,8 +133,35 @@ in the DNAnexus storage.
 
 The above example launch shows how to run the exection of the [nf-core/rnaseq](https://github.com/nf-core/rnaseq) pipeline using the `test` profile  
 
-## Latest changes  
+## Use of Git private repository
 
+The access of Git private repository is supported using the usual
+Nextflow [scm](https://www.nextflow.io/docs/latest/sharing.html?#scm-configuration-file) file holding the repository access credentials.
+
+Upload *scm* file into a DNAnexus project where the pipeline is expected to run, then
+specify the file path an an input parameter of the Nextflow app using the `scm_file`
+parameter e.g. `project-123456789:/my-scm.txt`.
+
+## User of Docker private registry
+
+The access of Docker images hosted on private registry is supported providing the
+registry credentials via JSON file formated as shown below:
+
+```
+{
+  "user": "<YOUR USER NAME>",
+  "password": "<YOUR PASSWORD>",
+  "registry": "docker.io"
+}
+```
+
+Upload the credentials into a DNAnexus project where the pipeline is expected to run,  
+then specify the file path an an input parameter of the Nextflow app using the `docker_creds_file` parameter e.g. `project-123456789:/my-docker-creds.json`.
+
+
+## Latest changes
+- Version `1.0.0-beta.3` adds the support for Docker private registry. Moreover
+  it fixes the support for DNAnexus Azure region.
 - As of version `1.0.0-beta.2` directives [cpus](https://www.nextflow.io/docs/latest/process.html#cpus), [memory](https://www.nextflow.io/docs/latest/process.html#memory), [disk](https://www.nextflow.io/docs/latest/process.html#disk) and [accelerator](https://www.nextflow.io/docs/latest/process.html#accelerator)
   are supported. When specified Nextflow look up for a machine type able to 
   satisfy the requested resources. The `machineType` directive has in any case 

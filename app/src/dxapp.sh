@@ -39,7 +39,7 @@ main() {
     export NXF_EXECUTOR=dnanexus
     export NXF_PLUGINS_DEFAULT=xpack-dnanexus
     export NXF_DOCKER_LEGACY=true
-
+    export NXF_DOCKER_CREDS_FILE=$docker_creds_file
     trap on_exit EXIT
     
     # log file name

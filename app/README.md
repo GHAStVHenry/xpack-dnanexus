@@ -36,4 +36,5 @@ DNAnexus project ID where the output is expected to be stored e.g. `dx://PROJECT
 * pipeline_url: The URL of the Git repository of the pipeline to the executed
 * args: Nextflow run options and pipeline parameters (optional)
 * scm_file: Git repository credentials file (optional)
+* docker_creds_file: Docker registries credentials file (optional)  
 * debug: Enable launcher script debugging mode (optional)
