@@ -11,7 +11,7 @@
       {
         "name": "Nextflow",
         "repoUrl": "https://github.com/nextflow-io/nextflow",
-        "version": "21.08.0-edge",
+        "version": "21.09.0-edge",
         "license": "Apache 2.0",
         "licenseUrl": "https://github.com/nextflow-io/nextflow/blob/master/COPYING",
         "author": "Paolo Di Tommaso, et al."
@@ -19,7 +19,7 @@
       {
         "name": "Groovy",
         "repoUrl": "https://github.com/apache/groovy",
-        "version": "3.0.8",
+        "version": "3.0.9",
         "license": "Apache 2.0",
         "licenseUrl": "https://github.com/apache/groovy/blob/master/LICENSE",
         "author": "Groovy community"
@@ -27,7 +27,7 @@
       {
         "name": "Xpack-dnanexus",
         "repoUrl": "https://github.com/seqeralabs/xpack-dnanexus",
-        "version": "1.0.0-beta.3",
+        "version": "1.0.0-beta.4",
         "license": "Proprietary",
         "author": "Paolo Di Tommaso, et al."
       }
@@ -58,13 +58,6 @@
         "optional": true
       },
       {
-        "name": "work_dir",
-        "class": "string",
-        "label": "Work directory",
-        "help": "Pipeline work directory (optional).",
-        "optional": true
-      },
-      {
         "name": "scm_file",
         "class": "string",
         "label": "Git repository credentials file",
@@ -76,6 +69,20 @@
         "class": "string",
         "label": "Docker credentials file",
         "help": "A file holding the credentials to access Docker private registries. It should be provided as a DNAnexus path e.g. dx://project-12345:/some/creds.txt",
+        "optional": true
+      },
+      {
+        "name": "resume_id",
+        "class": "string",
+        "label": "Resume ID",
+        "help": "Allow to resume the pipeline execution with the specified ID (optional).",
+        "optional": true
+      },
+      {
+        "name": "opts",
+        "class": "string",
+        "label": "Nextflow runtime advanced options",
+        "help": "Provides Nextflow runtime advanced options (optional).",
         "optional": true
       },
       {

@@ -17,7 +17,7 @@ NOTE: The plugin is still in beta version and some Nextflow functionalities are 
 
 * DNAnexus command line tools aka dx-toolkit. See [here](https://documentation.dnanexus.com/getting-started/tutorials/cli-quickstart) 
 for details.
-* Nextflow runtime version 21.08.0-edge or later. 
+* Nextflow runtime version 21.09.0-edge or later. 
 * Valid license for DNAnexus extension package for Nextflow.  
 * [Make](https://www.gnu.org/software/make) tool (only for the project bundling). 
 
@@ -98,7 +98,8 @@ variable `DX_CREDS_PROJECT`.
 
     dx run nextflow-app \
       --watch \
-      --input-json "$(envsubst < examples/hello.json)"
+      --delay-workspace-destruction \
+      --input-json "$(envsubst < examples/hello.json)" 
 
 The above snippet runs the Nextflow [hello](https://github.com/nextflow-io/hello) pipeline.
 
@@ -113,6 +114,7 @@ dx cat nextflow.log
 
     dx run nextflow-app \
         --watch \
+        --delay-workspace-destruction \
         --input-json "$(envsubst < examples/simple-rnaseq.json)"
     
 The above snippet the rnaseq-nf pipeline at [this link](https://github.com/nextflow-io/rnaseq-nf).
@@ -130,7 +132,6 @@ dx env | grep project | cut -f 2
 NOTE: The `dx://` pseudo-protocol is used by Nextflow to identify file paths 
 in the DNAnexus storage. 
 
-
 ##### Launching nf-core RNAseq pipeline 
 
     dx run nextflow-app \
@@ -140,6 +141,49 @@ in the DNAnexus storage.
         --input-json "$(envsubst < examples/nfcore-rnaseq.json)"
 
 The above example launch shows how to run the exection of the [nf-core/rnaseq](https://github.com/nf-core/rnaseq) pipeline using the `test` profile  
+
+## Pipeline scratch and output files
+
+Nextflow stores the tasks temporary files (i.e. the pipeline *work directory*) 
+in the temporary storage container assigned by DNAnexus when lunching the pipeline 
+execution. Note: make sure to enable the *delay workspace destruction* feature 
+if you want to be able to resume the pipeline execution is a successive execution.
+
+Moreover input files stored into a file system other than the DNAnexus storage, 
+and *staged* (ie. copied) into a temporary folder in the current DNAnexus project
+at the path `$DX_PROJECT_CONTEXT_ID:/.nextlow/stage`. 
+
+## Resume pipeline executions
+
+The ability of resume pipeline executions is a core Nextflow 
+feature that allows continuing a run of previously executed pipeline.
+
+When using the DNAnexus executor, the pipeline resume is possible with the following caveats:
+
+* The executions are in the same project container.
+* The *delay workspace destruction* DNAnexus feature was enabled for the run to be resumed and the data is still available.
+* The *resume ID* of the execution to be resumes is provided when launching the new pipeline run using the `--input resume_id=<RESUME ID>` command line option. 
+
+
+The resume ID is printed in the execution log header. For example:
+
+        =============================================================
+        === NF work-dir : container-1234567890:/scratch/
+        === NF Resume ID: 45ed7ad7-a327-4b64-8c0f-e5d6360b39e7
+        === NF log file : project-1234567890:nextflow-xxxx-yyyy.log
+        === NF cache    : project-1234567890:/.nextflow/cache/45ed7ad7-a327-4b64-8c0f-e5d6360b39e7
+        =============================================================
+
+
+Copy the resume ID from the previous execution provide it in the launch command line
+as shown below:
+
+    dx run nextflow-app \
+        --watch \
+        --delay-workspace-destruction \
+        --input-json "$(envsubst < examples/hello.json)" 
+        --input resume_id=45ed7ad7-a327-4b64-8c0f-e5d6360b39e7
+
 
 ## Use of Git private repository
 
@@ -168,6 +212,7 @@ then specify the file path an an input parameter of the Nextflow app using the `
 
 
 ## Latest changes
+- Version `1.0.0-beta.4` adds the support for Nextflow resume feature.
 - Version `1.0.0-beta.3` adds the support for Docker private registry. Moreover
   it fixes the support for DNAnexus Azure region.
 - As of version `1.0.0-beta.2` directives [cpus](https://www.nextflow.io/docs/latest/process.html#cpus), [memory](https://www.nextflow.io/docs/latest/process.html#memory), [disk](https://www.nextflow.io/docs/latest/process.html#disk) and [accelerator](https://www.nextflow.io/docs/latest/process.html#accelerator)
@@ -178,7 +223,6 @@ then specify the file path an an input parameter of the Nextflow app using the `
 
 ## Known problems and limitations
 
-* Nextflow resume functionality is still not working properly.
 * When the pipeline execution terminates abruptly the Nextflow log file is not uploaded the target project storage.
 * Some [Biocontainers](https://biocontainers.pro/) may not work properly.  
 

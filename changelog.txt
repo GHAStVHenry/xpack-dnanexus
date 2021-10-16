@@ -1,0 +1,10 @@
+XPACK-DNANEXUS CHANGE-LOG
+==========================
+1.0.0-beta.4 - 16 Oct 2021
+- Add support for resume 
+- Bump Nextflow 21.09.0-edge 
+- Bump xpack-dnanexus 1.0.0-beta.4
+
+1.0.0-beta.3 - 27 Sep 2021
+- Add support for Docker private repos
+- Fix support for Azure region

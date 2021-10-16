@@ -11,6 +11,9 @@ This app allows the deployment of Nextflow pipelines on the DNAnexus cloud, taki
 native integration with the platform, and allowing users to manage their data analyses collaboratively 
 within the familiar DNAnexus environment.
 
+Note: this app requires an activation license provided by [Seqera Labs](https://www.seqera.io/). 
+Contact sales@seqera.io to obtain an evaluation license and more details. 
+
 ## What are the input files?
 
 You need to provide the URL of the Git repository where a Nextflow pipeline project is stored 
@@ -31,11 +34,9 @@ DNAnexus project ID where the output is expected to be stored e.g. `dx://PROJECT
 
 * license: The activation license provided by Seqera Labs
 * pipeline_url: The URL of the Git repository of the pipeline to the executed
-* work_dir: The pipeline work directory. It has to be a DNAnexus storage path e.g. dx://PROJECT-0123456789:/some/work/dir (optional)
-* resume_id: The unique ID of the Nextflow execution to be resumed (optional)
-* log_file: The name of the Nextflow log file (optional)
-* opts: Nextflow runtime top options (optional)
 * args: Nextflow run options and pipeline parameters (optional)
 * scm_file: Git repository credentials file (optional)
-* docker_creds_file: Docker registries credentials file (optional)  
+* docker_creds_file: Docker registries credentials file (optional)
+* resume_id: The execution Id of the pipeline run to be resumed (optional)
+* opts: Nextflow runtime advanced options (optional)  
 * debug: Enable launcher script debugging mode (optional)
