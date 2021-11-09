@@ -1,4 +1,4 @@
 {
 	"pipeline_url": "nextflow-io/hello",
-	"license": "$NXF_XPACK_LICENSE"
+	"license": "$DX_CREDS_PROJECT:/xpack-license.txt"
 }

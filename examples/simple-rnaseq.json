@@ -1,5 +1,5 @@
 {
 	"pipeline_url": "https://github.com/nextflow-io/rnaseq-nf",
 	"args": "-profile docker",
-	"license": "$NXF_XPACK_LICENSE"
+	"license": "$DX_CREDS_PROJECT:/xpack-license.txt"
 }
