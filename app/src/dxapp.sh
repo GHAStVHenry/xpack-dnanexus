@@ -92,7 +92,7 @@ main() {
 nf_task_exit() {
   ret=$?
   if [ -f .command.log ]; then
-    dx upload .command.log --path "${cmd_log_file}" --brief --no-progress || true
+    dx upload .command.log --path "${cmd_log_file}" --brief --wait --no-progress || true
   else
     >&2 echo "Missing Nextflow .command.log file"
   fi
