@@ -181,7 +181,7 @@ as shown below:
     dx run nextflow-app \
         --watch \
         --delay-workspace-destruction \
-        --input-json "$(envsubst < examples/hello.json)" 
+        --input-json "$(envsubst < examples/hello.json)" \
         --input resume_id=45ed7ad7-a327-4b64-8c0f-e5d6360b39e7
 
 

@@ -2,7 +2,7 @@
 #
 # Copyright 2021, Seqera Labs, S.L. All Rights Reserved.
 #
-set -eo pipefail
+set -o pipefail
 
 on_exit() {
   ret=$?
@@ -51,7 +51,7 @@ main() {
     export NXF_IGNORE_RESUME_HISTORY=true
     export NXF_ANSI_LOG=false
     export NXF_EXECUTOR=dnanexus
-    export NXF_PLUGINS_DEFAULT=xpack-dnanexus@1.0.0-beta.4
+    export NXF_PLUGINS_DEFAULT=xpack-dnanexus@1.0.0-beta.5
     export NXF_DOCKER_LEGACY=true
     export NXF_DOCKER_CREDS_FILE=$docker_creds_file
     [[ $scm_file ]] && export NXF_SCM_FILE=$(dx_path $scm_file 'Nextflow CSM file')
@@ -96,7 +96,9 @@ nf_task_exit() {
   else
     >&2 echo "Missing Nextflow .command.log file"
   fi
-  dx-jobutil-add-output exit_code "$ret" --class=int
+  # mark the job as successful in any case, real task
+  # error code is managed by nextflow via .exitcode file
+  dx-jobutil-add-output exit_code "0" --class=int
 }
 
 nf_task_entry() {
@@ -106,6 +108,6 @@ nf_task_entry() {
   trap nf_task_exit EXIT
   # run the task
   dx cat "${cmd_launcher_file}" > .command.run
-  bash .command.run > >(tee .command.log) 2>&1
+  bash .command.run > >(tee .command.log) 2>&1 || true
 }
 

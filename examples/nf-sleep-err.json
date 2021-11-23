@@ -1,0 +1,5 @@
+{
+	"pipeline_url": "https://github.com/pditommaso/nf-sleep",
+	"license": "$DX_CREDS_PROJECT:/xpack-license.txt",
+	"args": "--exit 1"
+}
